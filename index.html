@@ -601,6 +601,25 @@
     .mini-ring:nth-child(3) span { animation-duration: 4.5s; }
     .mini-ring:nth-child(4) span { animation-duration: 7s; }
 
+  
+    .train-leds {
+      margin-top: 8px; letter-spacing: .14em;
+      font-family: 'PressStart', monospace; font-size: 10px; color: var(--red);
+    }
+    .week-fill {
+      display: flex; gap: 4px; margin-top: 10px; height: 10px;
+    }
+    .week-fill span {
+      flex: 1; border-radius: 2px; background: #2a2a2a;
+    }
+    .w.light .week-fill span { background: #e6e6e2; }
+    .week-fill span.on {
+      background: var(--red);
+      animation: nf-breathe 1.8s ease-in-out infinite;
+    }
+    .week-fill span.on:nth-child(2) { animation-delay: .15s; }
+    .week-fill span.on:nth-child(3) { animation-delay: .3s; }
+
   </style>
 </head>
 <body>
@@ -632,6 +651,11 @@
       sleepValue: '7.5',
       streakValue: '5',
       streakLeds: '■■■■■□□',
+      trainValue: '45',
+      workoutsValue: '1',
+      weekTrainValue: '2/3',
+      weekTrainLeds: '■■□····',
+      trainDots: '●●●●●●··',
       energyDots: '●●●●●●··',
       waterDots: '●●●●●···',
     };
@@ -715,6 +739,13 @@
       { id: 'live-ripple-water', name: 'LIVE · ripple water', format: '2×2', theme: 'light', kind: 'live-ripple', label: 'WATER', value: 'waterValue' },
       { id: 'live-sparks-streak', name: 'LIVE · sparks streak', format: '2×2', theme: 'ink', kind: 'live-sparks', label: 'STREAK', value: 'streakValue' },
       { id: 'live-typewriter-kcal', name: 'LIVE · typewriter kcal', format: '2×2', theme: 'light', kind: 'live-type', label: 'KCAL', value: 'energyValue' },
+
+      { id: 'train', name: 'nf-fit · train', format: '2×2', theme: 'light', kind: 'train-hero' },
+      { id: 'train-week', name: 'nf-fit · train week', format: '3×2', theme: 'light', kind: 'train-week' },
+      { id: 'live-train-radar', name: 'LIVE · train radar', format: '3×2', theme: 'ink', kind: 'live-train-radar' },
+      { id: 'live-train-eq', name: 'LIVE · train equalizer', format: '3×2', theme: 'light', kind: 'live-train-eq' },
+      { id: 'live-train-pulse', name: 'LIVE · train pulse', format: '2×2', theme: 'light', kind: 'live-train-pulse' },
+      { id: 'live-train-week-fill', name: 'LIVE · train week fill', format: '3×2', theme: 'ink', kind: 'live-train-week-fill' },
     ];
 
     function sizeClass(format) {
@@ -1146,6 +1177,72 @@
           <div class="row spread"><span class="lbl">${w.label}</span><span class="sq-accent"></span></div>
           <div class="val lg cursor-blink">${v(w.value)}</div>
           <div class="dots">${S.energyDots}</div>
+        </div>`;
+      }
+
+
+      if (w.kind === 'train-hero') {
+        return `<div class="${base}">
+          <div class="row spread"><span class="lbl">TRAIN</span><span class="sq-accent"></span></div>
+          <div class="val lg">${S.trainValue}<span class="unit">min</span></div>
+          <div class="dots">${S.trainDots}</div>
+          <div class="lbl" style="margin-top:8px">STREAK ${S.streakValue} · SETS ${S.workoutsValue}</div>
+        </div>`;
+      }
+      if (w.kind === 'train-week') {
+        return `<div class="${base} wide">
+          <div class="row spread"><span class="pixel" style="font-size:9px">${S.dayLabel}</span><span class="sq-accent"></span></div>
+          <div class="radar-grid">
+            <div class="radar-cell"><div class="lbl">MIN</div><div class="val sm">${S.trainValue}</div></div>
+            <div class="radar-cell"><div class="lbl">STREAK</div><div class="val sm">${S.streakValue}</div></div>
+            <div class="radar-cell"><div class="lbl">WEEK</div><div class="val sm">${S.weekTrainValue}</div></div>
+            <div class="radar-cell"><div class="lbl">SETS</div><div class="val sm">${S.workoutsValue}</div></div>
+          </div>
+          <div class="train-leds">${S.weekTrainLeds}</div>
+        </div>`;
+      }
+      if (w.kind === 'live-train-radar') {
+        return `<div class="${base} wide radar-host">
+          <div class="radar-sweep"></div>
+          <div class="row spread" style="position:relative;z-index:1"><span class="lbl">TRAIN</span><span class="pixel" style="font-size:9px">${S.dayLabel}</span></div>
+          <div class="radar-grid" style="position:relative;z-index:1">
+            <div class="radar-cell bounce"><span class="ping"></span><div class="lbl">MIN</div><div class="val sm">${S.trainValue}</div></div>
+            <div class="radar-cell bounce"><span class="ping"></span><div class="lbl">STREAK</div><div class="val sm">${S.streakValue}</div></div>
+            <div class="radar-cell bounce"><span class="ping"></span><div class="lbl">WEEK</div><div class="val sm">${S.weekTrainValue}</div></div>
+            <div class="radar-cell bounce"><span class="ping"></span><div class="lbl">SETS</div><div class="val sm">${S.workoutsValue}</div></div>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'live-train-eq') {
+        return `<div class="${base} wide">
+          <div class="row spread"><span class="lbl">TRAIN MIX</span><span class="pixel" style="font-size:9px">${S.weekTrainValue}</span></div>
+          <div class="eq-row">
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+          </div>
+          <div class="row spread" style="margin-top:8px">
+            <span class="lbl">${S.trainValue} MIN</span>
+            <span class="lbl">STR ${S.streakValue}</span>
+            <span class="lbl">SET ${S.workoutsValue}</span>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'live-train-pulse') {
+        return `<div class="${base} pulse-host">
+          <div class="breathe"></div>
+          <div class="lbl">TRAIN</div>
+          <div class="val lg" style="margin-top:10px;position:relative;z-index:1">${S.trainValue}<span class="unit">min</span></div>
+          <div class="lbl" style="position:relative;z-index:1;margin-top:6px">streak ${S.streakValue}</div>
+        </div>`;
+      }
+      if (w.kind === 'live-train-week-fill') {
+        const on = Math.max(0, Math.min(7, parseInt(String(S.weekTrainValue).split('/')[0], 10) || 0));
+        const cells = Array.from({length:7}, (_,i)=>`<span class="${i<on?'on':''}"></span>`).join('');
+        return `<div class="${base} wide">
+          <div class="row spread"><span class="lbl">WEEK TRAIN</span><span class="sq-accent"></span></div>
+          <div class="val" style="font-size:20px">${S.weekTrainValue}</div>
+          <div class="week-fill">${cells}</div>
+          <div class="lbl" style="margin-top:8px">${S.trainValue} min today · streak ${S.streakValue}</div>
         </div>`;
       }
 
