@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>nf-fit · widget preview</title>
+  <title>nf-fit · widget preview · 2×2 / 3×2</title>
   <style>
     @font-face {
       font-family: 'PressStart';
@@ -122,10 +122,12 @@
       border-radius: 28px;
       position: relative;
     }
-    .w.sq { aspect-ratio: 1; max-width: 168px; }
-    .w.wide { aspect-ratio: 2.2 / 1; max-width: 320px; }
-    .w.strip { aspect-ratio: 4 / 1; max-width: 340px; padding: 10px 14px; border-radius: 22px; }
-    .w.tall { aspect-ratio: 0.55; max-width: 110px; border-radius: 40px; padding: 16px 10px; }
+    /* Home grid: 2×2 ≈ square, 3×2 ≈ 1.5∶1 */
+    .w.sq { aspect-ratio: 1; max-width: 156px; padding: 10px; border-radius: 20px; }
+    .w.wide { aspect-ratio: 1.5 / 1; max-width: 240px; padding: 8px; border-radius: 20px; }
+    .w.strip { aspect-ratio: 1.5 / 1; max-width: 240px; padding: 8px 10px; border-radius: 20px; }
+    .w.tall { aspect-ratio: 1; max-width: 156px; border-radius: 20px; padding: 10px; }
+    .w.board { aspect-ratio: 1.5 / 1; max-width: 240px; padding: 8px; border-radius: 20px; }
     .w.disk {
       aspect-ratio: 1;
       max-width: 150px;
@@ -153,7 +155,7 @@
       margin-top: 8px;
       line-height: 1.2;
     }
-    .val.lg { font-size: 28px; }
+    .val.lg { font-size: 18px; }
     .val.sm { font-size: 14px; }
     .unit { font-size: 10px; color: var(--muted); margin-left: 4px; }
     .led {
@@ -184,7 +186,11 @@
       flex: 1;
     }
     .metric .lbl { font-size: 7px; }
-    .metric .val { font-size: 14px; margin-top: 4px; }
+    .metric .val { font-size: 12px; margin-top: 2px; }
+    .w.board .metrics { margin-top: 4px; gap: 4px; }
+    .w.board .pixel { font-size: 9px !important; }
+    .val.lg { font-size: 18px; }
+    .val { font-size: 16px; margin-top: 4px; }
     .h-split { display: flex; gap: 12px; width: 100%; height: 100%; }
     .h-split > * { flex: 1; }
     .v-stack { display: flex; flex-direction: column; justify-content: center; gap: 8px; }
@@ -200,11 +206,11 @@
   <header>
     <div>
       <h1>nf-fit widget preview</h1>
-      <p>Пиксельные макеты без телефона · sample data · фильтр NEW</p>
+      <p>Компактная сетка 2×2 / 3×2 · sample data · обновлено Nov 2026</p>
     </div>
     <div class="filters" id="filters">
-      <button data-filter="new" class="active">только NEW ·</button>
-      <button data-filter="all">все</button>
+      <button data-filter="all" class="active">все · 2×2/3×2</button>
+      <button data-filter="new">только NEW</button>
       <button data-filter="ink">ink / dark</button>
       <button data-filter="light">light</button>
     </div>
@@ -213,7 +219,7 @@
 
   <script>
     const S = {
-      dayLabel: '04.11',
+      dayLabel: '05.11',
       energyValue: '1870',
       energyHi: '18',
       energyLo: '70',
@@ -231,57 +237,59 @@
 
     const widgets = [
       // v1 (kept)
-      { id: 'today', name: 'nf-fit · day', format: '4×2', theme: 'light', kind: 'board' },
+      { id: 'today', name: 'nf-fit · day', format: '3×2', theme: 'light', kind: 'board' },
       { id: 'kcal', name: 'nf-fit · kcal', format: '2×2', theme: 'light', kind: 'hero', label: 'KCAL', value: 'energyValue', accent: true },
       { id: 'steps', name: 'nf-fit · steps', format: '2×2', theme: 'light', kind: 'hero', label: 'STEPS', value: 'stepsValue' },
       { id: 'water', name: 'nf-fit · water', format: '2×2', theme: 'light', kind: 'hero', label: 'WATER', value: 'waterValue', unit: true },
       { id: 'sleep', name: 'nf-fit · sleep', format: '2×2', theme: 'light', kind: 'hero', label: 'SLEEP H', value: 'sleepValue' },
       { id: 'streak', name: 'nf-fit · streak', format: '2×2', theme: 'light', kind: 'hero', label: 'STREAK', value: 'streakValue', accent: true },
       { id: 'dual', name: 'nf-fit · dual', format: '2×2', theme: 'light', kind: 'dual' },
-      { id: 'strip', name: 'nf-fit · strip', format: '4×1', theme: 'light', kind: 'strip' },
-      { id: 'wide-kcal', name: 'nf-fit · wide kcal', format: '4×2', theme: 'light', kind: 'wide' },
-      { id: 'ink-today', name: 'nf-fit · ink day', format: '4×2', theme: 'ink', kind: 'board' },
-      { id: 'tall', name: 'nf-fit · tall', format: '2×3', theme: 'light', kind: 'tall' },
+      { id: 'strip', name: 'nf-fit · strip', format: '3×2', theme: 'light', kind: 'strip' },
+      { id: 'wide-kcal', name: 'nf-fit · wide kcal', format: '3×2', theme: 'light', kind: 'wide' },
+      { id: 'ink-today', name: 'nf-fit · ink day', format: '3×2', theme: 'ink', kind: 'board' },
+      { id: 'tall', name: 'nf-fit · tall', format: '2×2', theme: 'light', kind: 'tall' },
       // NEW batch 1–2
       { id: 'new-pixel-kcal', name: 'NEW · pixel kcal', format: '2×2', theme: 'light', kind: 'hero-led', label: 'KCAL', value: 'energyValue' },
       { id: 'new-pixel-kcal-ink', name: 'NEW · pixel kcal ink', format: '2×2', theme: 'ink', kind: 'hero-led', label: 'KCAL', value: 'energyValue' },
       { id: 'new-pixel-day', name: 'NEW · pixel day', format: '2×2', theme: 'light', kind: 'day' },
       { id: 'new-pixel-day-ink', name: 'NEW · pixel day ink', format: '2×2', theme: 'ink', kind: 'day' },
-      { id: 'new-pixel-pill-kcal', name: 'NEW · pixel pill kcal', format: '2×3', theme: 'ink', kind: 'pill', label: 'KCAL', value: 'energyValue' },
-      { id: 'new-pixel-pill-sleep', name: 'NEW · pixel pill sleep', format: '2×3', theme: 'ink', kind: 'pill', label: 'SLEEP', value: 'sleepValue' },
+      { id: 'new-pixel-pill-kcal', name: 'NEW · pixel pill kcal', format: '2×2', theme: 'ink', kind: 'pill', label: 'KCAL', value: 'energyValue' },
+      { id: 'new-pixel-pill-sleep', name: 'NEW · pixel pill sleep', format: '2×2', theme: 'ink', kind: 'pill', label: 'SLEEP', value: 'sleepValue' },
       { id: 'new-red-kcal', name: 'NEW · red kcal', format: '2×2', theme: 'red', kind: 'disk', label: 'KCAL', value: 'energyValue' },
-      { id: 'new-led-board', name: 'NEW · led board', format: '4×2', theme: 'ink', kind: 'board-led' },
-      { id: 'new-matrix-strip', name: 'NEW · matrix strip', format: '4×1', theme: 'ink', kind: 'strip' },
+      { id: 'new-led-board', name: 'NEW · led board', format: '3×2', theme: 'ink', kind: 'board-led' },
+      { id: 'new-matrix-strip', name: 'NEW · matrix strip', format: '3×2', theme: 'ink', kind: 'strip' },
       { id: 'new-dual-ink', name: 'NEW · dual ink', format: '2×2', theme: 'ink', kind: 'dual-led' },
-      { id: 'new-wide-ink-kcal', name: 'NEW · wide ink kcal', format: '4×2', theme: 'ink', kind: 'wide' },
+      { id: 'new-wide-ink-kcal', name: 'NEW · wide ink kcal', format: '3×2', theme: 'ink', kind: 'wide' },
       { id: 'new-pixel-water', name: 'NEW · pixel water', format: '2×2', theme: 'light', kind: 'hero-led', label: 'WATER', value: 'waterValue', unit: true },
       { id: 'new-pixel-streak-ink', name: 'NEW · pixel streak ink', format: '2×2', theme: 'ink', kind: 'hero-led', label: 'STREAK', value: 'streakValue' },
       // NEW batch 3
       { id: 'new-pixel-steps-ink', name: 'NEW · pixel steps ink', format: '2×2', theme: 'ink', kind: 'hero-led', label: 'STEPS', value: 'stepsValue' },
       { id: 'new-pixel-sleep-ink', name: 'NEW · pixel sleep ink', format: '2×2', theme: 'ink', kind: 'hero-led', label: 'SLEEP', value: 'sleepValue' },
-      { id: 'new-light-pill-steps', name: 'NEW · light pill steps', format: '2×3', theme: 'light', kind: 'pill', label: 'STEPS', value: 'stepsValue' },
+      { id: 'new-light-pill-steps', name: 'NEW · light pill steps', format: '2×2', theme: 'light', kind: 'pill', label: 'STEPS', value: 'stepsValue' },
       { id: 'new-red-sleep', name: 'NEW · red sleep', format: '2×2', theme: 'red', kind: 'disk', label: 'SLEEP', value: 'sleepValue' },
-      { id: 'new-clock-kcal', name: 'NEW · clock kcal', format: '2×3', theme: 'ink', kind: 'clock' },
+      { id: 'new-clock-kcal', name: 'NEW · clock kcal', format: '2×2', theme: 'ink', kind: 'clock' },
       { id: 'new-streak-leds', name: 'NEW · streak leds', format: '2×2', theme: 'ink', kind: 'streak-leds' },
-      { id: 'new-bento', name: 'NEW · bento', format: '4×2', theme: 'ink', kind: 'bento' },
-      { id: 'new-mono-strip-light', name: 'NEW · mono strip light', format: '4×1', theme: 'light', kind: 'strip' },
-      { id: 'new-water-pill-ink', name: 'NEW · water pill ink', format: '2×3', theme: 'ink', kind: 'pill', label: 'WATER', value: 'waterValue' },
+      { id: 'new-bento', name: 'NEW · bento', format: '3×2', theme: 'ink', kind: 'bento' },
+      { id: 'new-mono-strip-light', name: 'NEW · mono strip light', format: '3×2', theme: 'light', kind: 'strip' },
+      { id: 'new-water-pill-ink', name: 'NEW · water pill ink', format: '2×2', theme: 'ink', kind: 'pill', label: 'WATER', value: 'waterValue' },
       // batch 4
-      { id: 'new-clock-steps', name: 'NEW · clock steps', format: '2×3', theme: 'ink', kind: 'clock-steps' },
+      { id: 'new-clock-steps', name: 'NEW · clock steps', format: '2×2', theme: 'ink', kind: 'clock-steps' },
       { id: 'new-red-water', name: 'NEW · red water', format: '2×2', theme: 'red', kind: 'disk', label: 'H2O', value: 'waterValue' },
       { id: 'new-white-disk-steps', name: 'NEW · white disk steps', format: '2×2', theme: 'light', kind: 'disk-outline', label: 'STEPS', value: 'stepsValue' },
-      { id: 'new-pair-kcal-sleep', name: 'NEW · pair kcal sleep', format: '4×2', theme: 'ink', kind: 'pair' },
-      { id: 'new-stack-three', name: 'NEW · stack three', format: '2×3', theme: 'ink', kind: 'stack3' },
-      { id: 'new-horizon-kcal', name: 'NEW · horizon kcal', format: '4×2', theme: 'light', kind: 'wide' },
+      { id: 'new-pair-kcal-sleep', name: 'NEW · pair kcal sleep', format: '3×2', theme: 'ink', kind: 'pair' },
+      { id: 'new-stack-three', name: 'NEW · stack three', format: '2×2', theme: 'ink', kind: 'stack3' },
+      { id: 'new-horizon-kcal', name: 'NEW · horizon kcal', format: '3×2', theme: 'light', kind: 'wide' },
       { id: 'new-frame-day', name: 'NEW · frame day', format: '2×2', theme: 'light', kind: 'frame-day' },
       { id: 'new-micro-kcal-ink', name: 'NEW · micro kcal ink', format: '2×2', theme: 'ink', kind: 'micro' },
-      { id: 'new-quad-light', name: 'NEW · quad light', format: '4×2', theme: 'light', kind: 'quad' },
+      { id: 'new-quad-light', name: 'NEW · quad light', format: '3×2', theme: 'light', kind: 'quad' },
     ];
 
     function sizeClass(format) {
-      if (format === '4×1') return 'strip';
-      if (format === '2×3') return 'tall';
-      if (format.startsWith('4')) return 'wide';
+      if (format === '3×2') return 'wide';
+      if (format === '2×2') return 'sq';
+      // legacy leftovers → compact grid
+      if (format === '4×1' || format.startsWith('4')) return 'wide';
+      if (format === '2×3') return 'sq';
       return 'sq';
     }
 
@@ -468,7 +476,7 @@
       return `<div class="${base}"><div class="lbl">${w.name}</div></div>`;
     }
 
-    let filter = 'new';
+    let filter = 'all';
     const grid = document.getElementById('grid');
 
     function paint() {
