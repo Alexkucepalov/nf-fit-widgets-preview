@@ -403,6 +403,204 @@
       background: #7c1d1d; border-color: #ff8a8a; color: #fff;
     }
 
+  
+    /* —— LIVE pack 2: radar+ / motion lab —— */
+    @keyframes nf-sweep {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes nf-sonar {
+      0% { transform: scale(.35); opacity: .7; }
+      100% { transform: scale(1.35); opacity: 0; }
+    }
+    @keyframes nf-bounce-in {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    @keyframes nf-cascade {
+      0%, 15% { opacity: .25; transform: scale(.92); }
+      30%, 55% { opacity: 1; transform: scale(1); }
+      70%, 100% { opacity: .45; transform: scale(.96); }
+    }
+    @keyframes nf-eq {
+      0%, 100% { transform: scaleY(.35); }
+      50% { transform: scaleY(1); }
+    }
+    @keyframes nf-type-blink {
+      0%, 45% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    @keyframes nf-glitch {
+      0%, 90%, 100% { transform: none; text-shadow: none; }
+      92% { transform: translate(1px, -1px); text-shadow: -2px 0 #0ff, 2px 0 #f0f; }
+      94% { transform: translate(-1px, 1px); text-shadow: 2px 0 #0ff, -2px 0 #f0f; }
+      96% { transform: translate(1px, 0); }
+    }
+    @keyframes nf-blob {
+      0%, 100% { border-radius: 42% 58% 55% 45% / 48% 42% 58% 52%; transform: translate(0,0) scale(1); }
+      33% { border-radius: 55% 45% 42% 58% / 55% 48% 52% 45%; transform: translate(4%, -3%) scale(1.05); }
+      66% { border-radius: 48% 52% 58% 42% / 42% 58% 45% 55%; transform: translate(-3%, 4%) scale(.96); }
+    }
+    @keyframes nf-float-y {
+      0%, 100% { transform: translateY(0); opacity: .5; }
+      50% { transform: translateY(-10px); opacity: 1; }
+    }
+    @keyframes nf-needle {
+      0% { transform: rotate(-40deg); }
+      50% { transform: rotate(55deg); }
+      100% { transform: rotate(-20deg); }
+    }
+    @keyframes nf-train {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(250%); }
+    }
+    @keyframes nf-ripple {
+      0% { transform: scale(.4); opacity: .55; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+    @keyframes nf-slide-x {
+      0%, 20% { transform: translateX(0); }
+      25%, 45% { transform: translateX(-25%); }
+      50%, 70% { transform: translateX(-50%); }
+      75%, 95% { transform: translateX(-75%); }
+      100% { transform: translateX(0); }
+    }
+    @keyframes nf-spark {
+      0%, 100% { opacity: 0; transform: scale(.5); }
+      40% { opacity: 1; transform: scale(1.2); }
+      70% { opacity: .4; }
+    }
+
+    .radar-host { position: relative; overflow: hidden; }
+    .radar-sweep {
+      position: absolute; inset: -20%;
+      background: conic-gradient(from 0deg, transparent 0 78%, rgba(215,25,33,.28) 88%, transparent 100%);
+      animation: nf-sweep 3.5s linear infinite;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+    .w.light .radar-sweep { mix-blend-mode: multiply; }
+    .sonar-ring {
+      position: absolute; left: 50%; top: 50%; width: 90px; height: 90px;
+      margin: -45px 0 0 -45px; border-radius: 999px;
+      border: 1px solid rgba(215,25,33,.45);
+      animation: nf-sonar 2.4s ease-out infinite;
+      pointer-events: none;
+    }
+    .sonar-ring.d2 { animation-delay: .8s; }
+    .sonar-ring.d3 { animation-delay: 1.6s; }
+    .radar-cell.bounce .val { animation: nf-bounce-in 1.4s ease-in-out infinite; }
+    .radar-cell:nth-child(2).bounce .val { animation-delay: .15s; }
+    .radar-cell:nth-child(3).bounce .val { animation-delay: .3s; }
+    .radar-cell:nth-child(4).bounce .val { animation-delay: .45s; }
+    .cascade-cell { animation: nf-cascade 3.2s ease-in-out infinite; }
+    .cascade-cell:nth-child(2) { animation-delay: .35s; }
+    .cascade-cell:nth-child(3) { animation-delay: .7s; }
+    .cascade-cell:nth-child(4) { animation-delay: 1.05s; }
+    .eq-row { display: flex; align-items: flex-end; gap: 4px; height: 42px; margin-top: 8px; }
+    .eq-bar {
+      flex: 1; height: 100%; border-radius: 3px 3px 0 0;
+      background: linear-gradient(180deg, var(--red), #ff8a4a);
+      transform-origin: bottom;
+      animation: nf-eq 1.1s ease-in-out infinite;
+    }
+    .eq-bar:nth-child(2) { animation-delay: .1s; background: linear-gradient(180deg, #4aa3ff, #1d5fbf); }
+    .eq-bar:nth-child(3) { animation-delay: .2s; background: linear-gradient(180deg, #5ad0c4, #1f8a7e); }
+    .eq-bar:nth-child(4) { animation-delay: .3s; background: linear-gradient(180deg, #c08bff, #6a3cb0); }
+    .eq-bar:nth-child(5) { animation-delay: .15s; }
+    .eq-bar:nth-child(6) { animation-delay: .25s; }
+    .cursor-blink::after {
+      content: '▌'; margin-left: 2px; color: var(--red);
+      animation: nf-type-blink .9s step-end infinite;
+    }
+    .glitch-val { animation: nf-glitch 2.8s steps(2) infinite; }
+    .blob-bg {
+      position: absolute; width: 70%; height: 70%; left: 15%; top: 18%;
+      background: radial-gradient(circle at 30% 30%, rgba(215,25,33,.35), rgba(80,140,255,.2) 60%, transparent 70%);
+      animation: nf-blob 7s ease-in-out infinite;
+      filter: blur(8px); pointer-events: none;
+    }
+    .particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .particles i {
+      position: absolute; width: 4px; height: 4px; border-radius: 999px;
+      background: var(--red); animation: nf-float-y 2.4s ease-in-out infinite;
+    }
+    .particles i:nth-child(1) { left: 18%; bottom: 20%; animation-delay: 0s; }
+    .particles i:nth-child(2) { left: 40%; bottom: 28%; animation-delay: .3s; background: #4aa3ff; }
+    .particles i:nth-child(3) { left: 62%; bottom: 18%; animation-delay: .6s; }
+    .particles i:nth-child(4) { left: 78%; bottom: 32%; animation-delay: .9s; background: #5ad0c4; }
+    .particles i:nth-child(5) { left: 30%; bottom: 40%; animation-delay: 1.1s; }
+    .compass {
+      width: 64px; height: 64px; border-radius: 999px; margin: 6px auto 0;
+      border: 2px solid #e6e6e2; position: relative;
+    }
+    .w.ink .compass { border-color: #333; }
+    .compass .needle {
+      position: absolute; left: 50%; top: 12px; width: 2px; height: 22px;
+      margin-left: -1px; background: var(--red); transform-origin: bottom center;
+      border-radius: 2px; animation: nf-needle 3.2s ease-in-out infinite;
+    }
+    .compass .hub {
+      position: absolute; left: 50%; top: 50%; width: 8px; height: 8px;
+      margin: -4px 0 0 -4px; border-radius: 999px; background: var(--red);
+    }
+    .train-track {
+      position: relative; height: 6px; margin-top: 10px; border-radius: 999px;
+      background: #e6e6e2; overflow: hidden;
+    }
+    .w.ink .train-track { background: #2a2a2a; }
+    .train-car {
+      position: absolute; top: 0; left: 0; height: 100%; width: 34%;
+      border-radius: 999px; background: var(--red);
+      animation: nf-train 2.2s linear infinite;
+    }
+    .ripple-host { position: relative; overflow: hidden; align-items: center; justify-content: center; text-align: center; }
+    .ripple {
+      position: absolute; left: 50%; top: 55%; width: 70px; height: 70px;
+      margin: -35px 0 0 -35px; border-radius: 999px;
+      border: 2px solid rgba(74,163,255,.55);
+      animation: nf-ripple 2.2s ease-out infinite;
+    }
+    .ripple.d2 { animation-delay: .7s; }
+    .carousel {
+      width: 100%; overflow: hidden; margin-top: 6px;
+    }
+    .carousel-track {
+      display: flex; width: 400%;
+      animation: nf-slide-x 8s ease-in-out infinite;
+    }
+    .carousel-track .slide {
+      width: 25%; padding: 4px 2px;
+    }
+    .spark-row { display: flex; gap: 6px; margin-top: 8px; justify-content: center; }
+    .spark {
+      width: 8px; height: 8px; border-radius: 999px; background: var(--red);
+      animation: nf-spark 1.6s ease-in-out infinite;
+    }
+    .spark:nth-child(2) { animation-delay: .2s; background: #4aa3ff; }
+    .spark:nth-child(3) { animation-delay: .4s; background: #5ad0c4; }
+    .spark:nth-child(4) { animation-delay: .6s; background: #c08bff; }
+    .mini-rings { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 4px; flex: 1; }
+    .mini-ring {
+      aspect-ratio: 1; border-radius: 999px; position: relative;
+      background: conic-gradient(from -90deg, var(--red) 0 var(--p, 60%), rgba(215,25,33,.12) 0);
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+              mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+      animation: nf-spin 5s linear infinite;
+    }
+    .mini-ring:nth-child(2) { --p: 72%; animation-duration: 6s; animation-direction: reverse; }
+    .mini-ring:nth-child(3) { --p: 48%; animation-duration: 4.5s; }
+    .mini-ring:nth-child(4) { --p: 80%; animation-duration: 7s; animation-direction: reverse; }
+    .mini-ring span {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      font-family: 'PressStart', monospace; font-size: 7px; color: inherit;
+      -webkit-mask: none; mask: none;
+      animation: nf-spin 5s linear infinite reverse;
+    }
+    .mini-ring:nth-child(2) span { animation-duration: 6s; }
+    .mini-ring:nth-child(3) span { animation-duration: 4.5s; }
+    .mini-ring:nth-child(4) span { animation-duration: 7s; }
+
   </style>
 </head>
 <body>
@@ -501,6 +699,22 @@
       { id: 'live-flip-kcal', name: 'LIVE · flip kcal', format: '2×2', theme: 'ink', kind: 'live-flip', label: 'KCAL', value: 'energyValue' },
       { id: 'live-day-radar', name: 'LIVE · day radar', format: '3×2', theme: 'light', kind: 'live-radar' },
       { id: 'live-day-radar-ink', name: 'LIVE · day radar ink', format: '3×2', theme: 'ink', kind: 'live-radar' },
+
+      { id: 'live-radar-sweep', name: 'LIVE · radar sweep', format: '3×2', theme: 'ink', kind: 'live-radar-sweep' },
+      { id: 'live-radar-bounce', name: 'LIVE · radar bounce', format: '3×2', theme: 'light', kind: 'live-radar-bounce' },
+      { id: 'live-radar-sonar', name: 'LIVE · radar sonar', format: '3×2', theme: 'ink', kind: 'live-radar-sonar' },
+      { id: 'live-cascade-day', name: 'LIVE · cascade day', format: '3×2', theme: 'light', kind: 'live-cascade' },
+      { id: 'live-eq-day', name: 'LIVE · equalizer day', format: '3×2', theme: 'ink', kind: 'live-eq' },
+      { id: 'live-rings-day', name: 'LIVE · rings day', format: '3×2', theme: 'light', kind: 'live-rings' },
+      { id: 'live-carousel-day', name: 'LIVE · carousel day', format: '2×2', theme: 'light', kind: 'live-carousel' },
+      { id: 'live-glitch-kcal', name: 'LIVE · glitch kcal', format: '2×2', theme: 'ink', kind: 'live-glitch', label: 'KCAL', value: 'energyValue' },
+      { id: 'live-blob-kcal', name: 'LIVE · blob kcal', format: '2×2', theme: 'light', kind: 'live-blob', label: 'KCAL', value: 'energyValue' },
+      { id: 'live-particles-steps', name: 'LIVE · particles steps', format: '2×2', theme: 'ink', kind: 'live-particles', label: 'STEPS', value: 'stepsValue' },
+      { id: 'live-compass-move', name: 'LIVE · compass move', format: '2×2', theme: 'light', kind: 'live-compass' },
+      { id: 'live-progress-train', name: 'LIVE · progress train', format: '3×2', theme: 'light', kind: 'live-train' },
+      { id: 'live-ripple-water', name: 'LIVE · ripple water', format: '2×2', theme: 'light', kind: 'live-ripple', label: 'WATER', value: 'waterValue' },
+      { id: 'live-sparks-streak', name: 'LIVE · sparks streak', format: '2×2', theme: 'ink', kind: 'live-sparks', label: 'STREAK', value: 'streakValue' },
+      { id: 'live-typewriter-kcal', name: 'LIVE · typewriter kcal', format: '2×2', theme: 'light', kind: 'live-type', label: 'KCAL', value: 'energyValue' },
     ];
 
     function sizeClass(format) {
@@ -784,6 +998,154 @@
             <div class="radar-cell"><span class="ping"></span><div class="lbl">WATER</div><div class="val sm">${S.waterValue}<span class="unit">${S.waterUnit}</span></div></div>
             <div class="radar-cell"><span class="ping"></span><div class="lbl">SLEEP</div><div class="val sm">${S.sleepValue}</div></div>
           </div>
+        </div>`;
+      }
+
+
+      if (w.kind === 'live-radar-sweep') {
+        return `<div class="${base} wide radar-host">
+          <div class="radar-sweep"></div>
+          <div class="row spread" style="position:relative;z-index:1"><span class="pixel" style="font-size:9px">${S.dayLabel}</span><span class="sq-accent"></span></div>
+          <div class="radar-grid" style="position:relative;z-index:1">
+            <div class="radar-cell"><span class="ping"></span><div class="lbl">KCAL</div><div class="val sm">${S.energyValue}</div></div>
+            <div class="radar-cell"><span class="ping"></span><div class="lbl">STEPS</div><div class="val sm">${S.stepsValue}</div></div>
+            <div class="radar-cell"><span class="ping"></span><div class="lbl">WATER</div><div class="val sm">${S.waterValue}<span class="unit">${S.waterUnit}</span></div></div>
+            <div class="radar-cell"><span class="ping"></span><div class="lbl">SLEEP</div><div class="val sm">${S.sleepValue}</div></div>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'live-radar-bounce') {
+        return `<div class="${base} wide">
+          <div class="row spread"><span class="pixel" style="font-size:9px">${S.dayLabel}</span><span class="sq-accent"></span></div>
+          <div class="radar-grid">
+            <div class="radar-cell bounce"><span class="ping"></span><div class="lbl">KCAL</div><div class="val sm">${S.energyValue}</div></div>
+            <div class="radar-cell bounce"><span class="ping"></span><div class="lbl">STEPS</div><div class="val sm">${S.stepsValue}</div></div>
+            <div class="radar-cell bounce"><span class="ping"></span><div class="lbl">WATER</div><div class="val sm">${S.waterValue}<span class="unit">${S.waterUnit}</span></div></div>
+            <div class="radar-cell bounce"><span class="ping"></span><div class="lbl">SLEEP</div><div class="val sm">${S.sleepValue}</div></div>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'live-radar-sonar') {
+        return `<div class="${base} wide radar-host">
+          <div class="sonar-ring"></div><div class="sonar-ring d2"></div><div class="sonar-ring d3"></div>
+          <div class="row spread" style="position:relative;z-index:1"><span class="pixel" style="font-size:9px">${S.dayLabel}</span><span class="sq-accent"></span></div>
+          <div class="radar-grid" style="position:relative;z-index:1">
+            <div class="radar-cell"><span class="ping"></span><div class="lbl">KCAL</div><div class="val sm">${S.energyValue}</div></div>
+            <div class="radar-cell"><span class="ping"></span><div class="lbl">STEPS</div><div class="val sm">${S.stepsValue}</div></div>
+            <div class="radar-cell"><span class="ping"></span><div class="lbl">WATER</div><div class="val sm">${S.waterValue}<span class="unit">${S.waterUnit}</span></div></div>
+            <div class="radar-cell"><span class="ping"></span><div class="lbl">SLEEP</div><div class="val sm">${S.sleepValue}</div></div>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'live-cascade') {
+        return `<div class="${base} wide">
+          <div class="row spread"><span class="pixel" style="font-size:9px">${S.dayLabel}</span><span class="sq-accent"></span></div>
+          <div class="radar-grid">
+            <div class="radar-cell cascade-cell"><div class="lbl">KCAL</div><div class="val sm">${S.energyValue}</div></div>
+            <div class="radar-cell cascade-cell"><div class="lbl">STEPS</div><div class="val sm">${S.stepsValue}</div></div>
+            <div class="radar-cell cascade-cell"><div class="lbl">WATER</div><div class="val sm">${S.waterValue}<span class="unit">${S.waterUnit}</span></div></div>
+            <div class="radar-cell cascade-cell"><div class="lbl">SLEEP</div><div class="val sm">${S.sleepValue}</div></div>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'live-eq') {
+        return `<div class="${base} wide">
+          <div class="row spread"><span class="lbl">DAY MIX</span><span class="pixel" style="font-size:9px">${S.dayLabel}</span></div>
+          <div class="eq-row">
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+          </div>
+          <div class="row spread" style="margin-top:8px">
+            <span class="lbl">K ${S.energyValue}</span>
+            <span class="lbl">S ${S.stepsValue}</span>
+            <span class="lbl">W ${S.waterValue}</span>
+            <span class="lbl">Z ${S.sleepValue}</span>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'live-rings') {
+        const stepsShort = S.stepsValue.length > 3 ? S.stepsValue.slice(0, -3) + 'k' : S.stepsValue;
+        return `<div class="${base} wide">
+          <div class="row spread"><span class="pixel" style="font-size:9px">${S.dayLabel}</span><span class="sq-accent"></span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;flex:1">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div class="mini-ring" style="--p:68%;width:46px;height:46px"></div><div class="lbl">KCAL</div><div class="val sm">${S.energyValue}</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div class="mini-ring" style="--p:74%;width:46px;height:46px"></div><div class="lbl">STEPS</div><div class="val sm">${stepsShort}</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div class="mini-ring" style="--p:55%;width:46px;height:46px"></div><div class="lbl">WATER</div><div class="val sm">${S.waterValue}</div></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div class="mini-ring" style="--p:82%;width:46px;height:46px"></div><div class="lbl">SLEEP</div><div class="val sm">${S.sleepValue}</div></div>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'live-carousel') {
+        return `<div class="${base}">
+          <div class="lbl">TODAY</div>
+          <div class="carousel">
+            <div class="carousel-track">
+              <div class="slide"><div class="lbl">KCAL</div><div class="val">${S.energyValue}</div></div>
+              <div class="slide"><div class="lbl">STEPS</div><div class="val">${S.stepsValue}</div></div>
+              <div class="slide"><div class="lbl">WATER</div><div class="val">${S.waterValue}<span class="unit">${S.waterUnit}</span></div></div>
+              <div class="slide"><div class="lbl">SLEEP</div><div class="val">${S.sleepValue}</div></div>
+            </div>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'live-glitch') {
+        return `<div class="${base}">
+          <div class="row spread"><span class="lbl">${w.label}</span><span class="sq-accent"></span></div>
+          <div class="val lg glitch-val">${v(w.value)}</div>
+          <div class="led"></div>
+        </div>`;
+      }
+      if (w.kind === 'live-blob') {
+        return `<div class="${base} pulse-host">
+          <div class="blob-bg"></div>
+          <div class="lbl" style="position:relative;z-index:1">${w.label}</div>
+          <div class="val lg" style="position:relative;z-index:1;margin-top:10px">${v(w.value)}</div>
+        </div>`;
+      }
+      if (w.kind === 'live-particles') {
+        return `<div class="${base} pulse-host">
+          <div class="particles"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="lbl" style="position:relative;z-index:1">${w.label}</div>
+          <div class="val lg" style="position:relative;z-index:1;margin-top:10px">${v(w.value)}</div>
+        </div>`;
+      }
+      if (w.kind === 'live-compass') {
+        return `<div class="${base}" style="align-items:center;text-align:center">
+          <div class="lbl">MOVE</div>
+          <div class="compass"><div class="needle"></div><div class="hub"></div></div>
+          <div class="val sm" style="margin-top:6px">${S.stepsValue}</div>
+        </div>`;
+      }
+      if (w.kind === 'live-train') {
+        return `<div class="${base} wide">
+          <div class="row spread"><span class="lbl">GOAL TRAIN</span><span class="pixel" style="font-size:9px">${S.dayLabel}</span></div>
+          <div class="val" style="font-size:18px">${S.energyValue}<span class="unit">/ 2400</span></div>
+          <div class="train-track"><div class="train-car"></div></div>
+          <div class="row spread" style="margin-top:8px">
+            <span class="lbl">STEPS ${S.stepsValue}</span>
+            <span class="lbl">H2O ${S.waterValue}${S.waterUnit}</span>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'live-ripple') {
+        return `<div class="${base} ripple-host">
+          <div class="ripple"></div><div class="ripple d2"></div>
+          <div class="lbl" style="position:relative;z-index:1">${w.label}</div>
+          <div class="val lg" style="position:relative;z-index:1;margin-top:10px">${v(w.value)}<span class="unit">${S.waterUnit}</span></div>
+        </div>`;
+      }
+      if (w.kind === 'live-sparks') {
+        return `<div class="${base}">
+          <div class="row spread"><span class="lbl">${w.label}</span><span class="sq-accent"></span></div>
+          <div class="val lg">${v(w.value)}</div>
+          <div class="spark-row"><span class="spark"></span><span class="spark"></span><span class="spark"></span><span class="spark"></span></div>
+        </div>`;
+      }
+      if (w.kind === 'live-type') {
+        return `<div class="${base}">
+          <div class="row spread"><span class="lbl">${w.label}</span><span class="sq-accent"></span></div>
+          <div class="val lg cursor-blink">${v(w.value)}</div>
+          <div class="dots">${S.energyDots}</div>
         </div>`;
       }
 
