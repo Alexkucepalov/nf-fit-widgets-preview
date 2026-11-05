@@ -620,17 +620,35 @@
     .week-fill span.on:nth-child(2) { animation-delay: .15s; }
     .week-fill span.on:nth-child(3) { animation-delay: .3s; }
 
+
+    /* —— pixel buddy —— */
+    @keyframes nf-cat-blink {
+      0%, 88%, 100% { opacity: 1; }
+      90%, 96% { opacity: 0; }
+    }
+    .cat-stage {
+      position: relative; width: 72px; height: 72px; margin: 6px auto 0;
+      image-rendering: pixelated;
+    }
+    .cat-stage img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      image-rendering: pixelated; object-fit: contain;
+    }
+    .cat-stage .blink {
+      opacity: 0;
+      animation: nf-cat-blink 3.6s step-end infinite;
+    }
   </style>
 </head>
 <body>
   <header>
     <div>
       <h1>nf-fit widget preview</h1>
-      <p>2×2 / 3×2 · CSS LIVE-анимации (на телефоне статичны) · sample data</p>
+      <p>2×2 / 3×2 · buddy + typewriter + progress train · sample data</p>
     </div>
     <div class="filters" id="filters">
       <button data-filter="all">все · 2×2/3×2</button>
-      <button data-filter="new">только NEW</button>
+      <button data-filter="live" class="active">LIVE / buddy</button>
       <button data-filter="ink">ink / dark</button>
       <button data-filter="light">light</button>
     </div>
@@ -708,44 +726,13 @@
       { id: 'new-micro-kcal-ink', name: 'NEW · micro kcal ink', format: '2×2', theme: 'ink', kind: 'micro' },
       { id: 'new-quad-light', name: 'NEW · quad light', format: '3×2', theme: 'light', kind: 'quad' },
 
-      // LIVE animated batch (preview CSS only)
-      { id: 'live-pulse-kcal', name: 'LIVE · pulse kcal', format: '2×2', theme: 'light', kind: 'live-pulse', label: 'KCAL', value: 'energyValue' },
-      { id: 'live-orbit-kcal', name: 'LIVE · orbit kcal', format: '2×2', theme: 'light', kind: 'live-orbit', label: 'KCAL', value: 'energyValue' },
-      { id: 'live-orbit-kcal-ink', name: 'LIVE · orbit kcal ink', format: '2×2', theme: 'ink', kind: 'live-orbit', label: 'KCAL', value: 'energyValue' },
-      { id: 'live-water-rise', name: 'LIVE · water rise', format: '2×2', theme: 'light', kind: 'live-water', label: 'WATER', value: 'waterValue' },
-      { id: 'live-water-wave', name: 'LIVE · water wave', format: '3×2', theme: 'light', kind: 'live-water-wide' },
-      { id: 'live-sleep-moon', name: 'LIVE · sleep moon', format: '2×2', theme: 'ink', kind: 'live-moon', label: 'SLEEP', value: 'sleepValue' },
-      { id: 'live-aurora-sleep', name: 'LIVE · aurora sleep', format: '3×2', theme: 'ink', kind: 'live-aurora' },
-      { id: 'live-steps-ticker', name: 'LIVE · steps ticker', format: '2×2', theme: 'light', kind: 'live-ticker', label: 'STEPS', value: 'stepsValue' },
-      { id: 'live-neon-steps', name: 'LIVE · neon steps', format: '2×2', theme: 'ink', kind: 'live-neon', label: 'STEPS', value: 'stepsValue' },
-      { id: 'live-streak-flame', name: 'LIVE · streak flame', format: '2×2', theme: 'ink', kind: 'live-flame', label: 'STREAK', value: 'streakValue' },
-      { id: 'live-ecg-kcal', name: 'LIVE · ecg kcal', format: '3×2', theme: 'light', kind: 'live-ecg', label: 'KCAL', value: 'energyValue' },
-      { id: 'live-flip-kcal', name: 'LIVE · flip kcal', format: '2×2', theme: 'ink', kind: 'live-flip', label: 'KCAL', value: 'energyValue' },
-      { id: 'live-day-radar', name: 'LIVE · day radar', format: '3×2', theme: 'light', kind: 'live-radar' },
-      { id: 'live-day-radar-ink', name: 'LIVE · day radar ink', format: '3×2', theme: 'ink', kind: 'live-radar' },
-
-      { id: 'live-radar-sweep', name: 'LIVE · radar sweep', format: '3×2', theme: 'ink', kind: 'live-radar-sweep' },
-      { id: 'live-radar-bounce', name: 'LIVE · radar bounce', format: '3×2', theme: 'light', kind: 'live-radar-bounce' },
-      { id: 'live-radar-sonar', name: 'LIVE · radar sonar', format: '3×2', theme: 'ink', kind: 'live-radar-sonar' },
-      { id: 'live-cascade-day', name: 'LIVE · cascade day', format: '3×2', theme: 'light', kind: 'live-cascade' },
-      { id: 'live-eq-day', name: 'LIVE · equalizer day', format: '3×2', theme: 'ink', kind: 'live-eq' },
-      { id: 'live-rings-day', name: 'LIVE · rings day', format: '3×2', theme: 'light', kind: 'live-rings' },
-      { id: 'live-carousel-day', name: 'LIVE · carousel day', format: '2×2', theme: 'light', kind: 'live-carousel' },
-      { id: 'live-glitch-kcal', name: 'LIVE · glitch kcal', format: '2×2', theme: 'ink', kind: 'live-glitch', label: 'KCAL', value: 'energyValue' },
-      { id: 'live-blob-kcal', name: 'LIVE · blob kcal', format: '2×2', theme: 'light', kind: 'live-blob', label: 'KCAL', value: 'energyValue' },
-      { id: 'live-particles-steps', name: 'LIVE · particles steps', format: '2×2', theme: 'ink', kind: 'live-particles', label: 'STEPS', value: 'stepsValue' },
-      { id: 'live-compass-move', name: 'LIVE · compass move', format: '2×2', theme: 'light', kind: 'live-compass' },
-      { id: 'live-progress-train', name: 'LIVE · progress train', format: '3×2', theme: 'light', kind: 'live-train' },
-      { id: 'live-ripple-water', name: 'LIVE · ripple water', format: '2×2', theme: 'light', kind: 'live-ripple', label: 'WATER', value: 'waterValue' },
-      { id: 'live-sparks-streak', name: 'LIVE · sparks streak', format: '2×2', theme: 'ink', kind: 'live-sparks', label: 'STREAK', value: 'streakValue' },
+      // Animated keepers (web LIVE; Android: buddy blink / typewriter / progress train)
+      { id: 'pixel-cat', name: 'nf-fit · buddy', format: '2×2', theme: 'light', kind: 'pixel-cat' },
       { id: 'live-typewriter-kcal', name: 'LIVE · typewriter kcal', format: '2×2', theme: 'light', kind: 'live-type', label: 'KCAL', value: 'energyValue' },
+      { id: 'live-progress-train', name: 'LIVE · progress train', format: '3×2', theme: 'light', kind: 'live-train' },
 
       { id: 'train', name: 'nf-fit · train', format: '2×2', theme: 'light', kind: 'train-hero' },
       { id: 'train-week', name: 'nf-fit · train week', format: '3×2', theme: 'light', kind: 'train-week' },
-      { id: 'live-train-radar', name: 'LIVE · train radar', format: '3×2', theme: 'ink', kind: 'live-train-radar' },
-      { id: 'live-train-eq', name: 'LIVE · train equalizer', format: '3×2', theme: 'light', kind: 'live-train-eq' },
-      { id: 'live-train-pulse', name: 'LIVE · train pulse', format: '2×2', theme: 'light', kind: 'live-train-pulse' },
-      { id: 'live-train-week-fill', name: 'LIVE · train week fill', format: '3×2', theme: 'ink', kind: 'live-train-week-fill' },
     ];
 
     function sizeClass(format) {
@@ -935,6 +922,18 @@
               <div><div class="lbl">SLEEP</div><div class="val sm">${S.sleepValue}</div></div>
             </div>
           </div>
+        </div>`;
+      }
+
+
+      if (w.kind === 'pixel-cat') {
+        return `<div class="${base}" style="align-items:center;text-align:center">
+          <div class="lbl">BUDDY</div>
+          <div class="cat-stage">
+            <img src="img/pixel_cat.png" alt="" />
+            <img class="blink" src="img/pixel_cat_blink.png" alt="" />
+          </div>
+          <div class="val sm" style="margin-top:6px">yum</div>
         </div>`;
       }
 
@@ -1255,8 +1254,8 @@
     function paint() {
       grid.innerHTML = '';
       widgets.filter((w) => {
-        if (filter === 'live') return w.name.startsWith('LIVE ·');
-        if (filter === 'new') return w.name.startsWith('NEW ·') || w.name.startsWith('LIVE ·');
+        if (filter === 'live') return w.name.startsWith('LIVE ·') || w.id === 'pixel-cat';
+        if (filter === 'new') return w.name.startsWith('NEW ·') || w.name.startsWith('LIVE ·') || w.id === 'pixel-cat';
         if (filter === 'ink') return w.theme === 'ink' || w.theme === 'red';
         if (filter === 'light') return w.theme === 'light';
         return true;
@@ -1265,7 +1264,7 @@
         card.className = 'card';
         card.innerHTML = `
           <div class="meta">
-            <div class="name ${w.name.startsWith('NEW') || w.name.startsWith('LIVE') ? 'new' : ''}">${w.name}${w.name.startsWith('LIVE') ? '<span class="live-tag">ANIM</span>' : ''}</div>
+            <div class="name ${w.name.startsWith('NEW') || w.name.startsWith('LIVE') || w.id === 'pixel-cat' ? 'new' : ''}">${w.name}${(w.name.startsWith('LIVE') || w.id === 'pixel-cat') ? '<span class="live-tag">ANIM</span>' : ''}</div>
             <div class="fmt">${w.format}</div>
           </div>
           <div class="stage">${renderWidget(w)}</div>
