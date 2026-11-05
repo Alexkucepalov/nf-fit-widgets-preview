@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>nf-fit · widget preview · 2×2 / 3×2</title>
+  <title>nf-fit · widget preview · LIVE</title>
   <style>
     @font-face {
       font-family: 'PressStart';
@@ -200,16 +200,219 @@
     .pill-center { align-items: center; text-align: center; justify-content: space-between; height: 100%; }
     .pill-center .val { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 18px; margin: 0; }
     .clock .val { flex: 1; display: flex; align-items: center; justify-content: center; margin: 0; font-size: 20px; }
+  
+    /* —— LIVE animations (preview-only; home widgets are static) —— */
+    @keyframes nf-breathe {
+      0%, 100% { transform: scale(1); opacity: .55; }
+      50% { transform: scale(1.08); opacity: 1; }
+    }
+    @keyframes nf-spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes nf-rise {
+      0% { transform: translateY(18%); }
+      50% { transform: translateY(0%); }
+      100% { transform: translateY(10%); }
+    }
+    @keyframes nf-wave {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes nf-flicker {
+      0%, 100% { opacity: 1; filter: brightness(1); }
+      40% { opacity: .75; filter: brightness(1.3); }
+      60% { opacity: .9; filter: brightness(.85); }
+    }
+    @keyframes nf-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(215,25,33,.0), inset 0 0 12px rgba(215,25,33,.15); }
+      50% { box-shadow: 0 0 18px 2px rgba(215,25,33,.45), inset 0 0 18px rgba(215,25,33,.35); }
+    }
+    @keyframes nf-twinkle {
+      0%, 100% { opacity: .25; }
+      50% { opacity: 1; }
+    }
+    @keyframes nf-ecg {
+      0% { stroke-dashoffset: 120; }
+      100% { stroke-dashoffset: 0; }
+    }
+    @keyframes nf-flip {
+      0% { transform: rotateX(0deg); }
+      45% { transform: rotateX(-90deg); }
+      55% { transform: rotateX(-90deg); }
+      100% { transform: rotateX(0deg); }
+    }
+    @keyframes nf-shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    @keyframes nf-orbit-dot {
+      from { offset-distance: 0%; }
+      to { offset-distance: 100%; }
+    }
+    @keyframes nf-count-blur {
+      0%, 100% { filter: blur(0); letter-spacing: 0; }
+      50% { filter: blur(1.5px); letter-spacing: .04em; }
+    }
+    .live-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: #ff8a8a;
+      border: 1px solid #ff8a8a55;
+      border-radius: 999px;
+      padding: 2px 7px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .ring-wrap {
+      position: absolute; inset: 10px;
+      border-radius: 999px;
+      border: 2px solid rgba(215,25,33,.25);
+      pointer-events: none;
+    }
+    .ring-wrap::after {
+      content: '';
+      position: absolute; inset: -4px;
+      border-radius: 999px;
+      border: 2px solid transparent;
+      border-top-color: var(--red);
+      border-right-color: var(--red);
+      animation: nf-spin 3.2s linear infinite;
+    }
+    .w.pulse-host { position: relative; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+    .w.pulse-host .breathe {
+      position: absolute; width: 70%; height: 70%; border-radius: 999px;
+      border: 2px solid var(--red);
+      animation: nf-breathe 2.4s ease-in-out infinite;
+    }
+    .water-tank {
+      position: relative; overflow: hidden; flex: 1; width: 100%;
+      border-radius: 12px; margin-top: 6px;
+      background: #e8eef5; border: 1px solid #d5dde8;
+      min-height: 54px;
+    }
+    .w.ink .water-tank { background: #0c1520; border-color: #1c2a3a; }
+    .water-fill {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 62%;
+      background: linear-gradient(180deg, #5eb1ff, #2a7fd4);
+      animation: nf-rise 4s ease-in-out infinite;
+    }
+    .water-wave {
+      position: absolute; left: 0; bottom: 58%; width: 200%; height: 14px;
+      background: radial-gradient(circle at 10px 10px, #7ec2ff 9px, transparent 10px) repeat-x;
+      background-size: 20px 14px;
+      animation: nf-wave 1.2s linear infinite;
+      opacity: .9;
+    }
+    .moon {
+      width: 36px; height: 36px; border-radius: 999px;
+      background: radial-gradient(circle at 35% 35%, #fff6d5, #e8d48b 55%, #c9a84a);
+      box-shadow: 0 0 16px rgba(255,230,150,.45);
+      margin: 8px auto 0;
+      position: relative;
+    }
+    .moon::after {
+      content: ''; position: absolute; right: -4px; top: -2px;
+      width: 28px; height: 28px; border-radius: 999px;
+      background: var(--soft-ink);
+    }
+    .w.light .moon::after { background: #1a1f2a; }
+    .w.ink .moon::after { background: var(--soft-ink); }
+    .stars span {
+      position: absolute; width: 3px; height: 3px; border-radius: 999px; background: #fff;
+      animation: nf-twinkle 2s ease-in-out infinite;
+    }
+    .stars span:nth-child(1) { top: 18%; left: 18%; animation-delay: 0s; }
+    .stars span:nth-child(2) { top: 28%; right: 22%; animation-delay: .4s; }
+    .stars span:nth-child(3) { top: 48%; left: 28%; animation-delay: .9s; }
+    .stars span:nth-child(4) { bottom: 22%; right: 18%; animation-delay: 1.3s; }
+    .flame {
+      width: 18px; height: 28px; margin-top: 8px;
+      background: radial-gradient(ellipse at 50% 80%, #ffef9a, #ff7a1a 45%, #d71921 80%, transparent 81%);
+      border-radius: 50% 50% 45% 45%;
+      animation: nf-flicker 0.7s ease-in-out infinite;
+      filter: drop-shadow(0 0 6px rgba(255,120,40,.6));
+    }
+    .neon {
+      animation: nf-glow 2.2s ease-in-out infinite;
+      border-radius: 20px;
+    }
+    .aurora {
+      background: linear-gradient(120deg, #0b1020, #123048, #1a3a2a, #2a1848, #0b1020);
+      background-size: 300% 300%;
+      animation: nf-shimmer 8s ease infinite;
+    }
+    .orbit {
+      width: 78px; height: 78px; border-radius: 999px; margin: 6px auto 0;
+      background:
+        conic-gradient(from -90deg, var(--red) 0 68%, rgba(215,25,33,.15) 68% 100%);
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+              mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+      animation: nf-spin 6s linear infinite;
+      position: relative;
+    }
+    .orbit-center {
+      position: absolute; inset: 14px; border-radius: 999px;
+      background: var(--paper); color: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'PressStart', monospace; font-size: 11px;
+      animation: none;
+    }
+    .w.ink .orbit-center { background: var(--soft-ink); color: var(--paper); }
+    .ticker .val {
+      animation: nf-count-blur 2.8s ease-in-out infinite;
+    }
+    .ecg {
+      width: 100%; height: 36px; margin-top: 8px;
+    }
+    .ecg path {
+      fill: none; stroke: var(--red); stroke-width: 2;
+      stroke-dasharray: 120; stroke-linecap: round;
+      animation: nf-ecg 1.6s linear infinite;
+    }
+    .flip-row { display: flex; gap: 4px; margin-top: 8px; perspective: 200px; }
+    .flip-cell {
+      background: #111; color: #f7f7f5; border-radius: 6px;
+      min-width: 28px; padding: 8px 4px; text-align: center;
+      font-family: 'PressStart', monospace; font-size: 14px;
+      box-shadow: inset 0 -1px 0 #333, 0 2px 0 #000;
+      animation: nf-flip 3.5s ease-in-out infinite;
+      transform-origin: center bottom;
+    }
+    .flip-cell:nth-child(2) { animation-delay: .15s; }
+    .flip-cell:nth-child(3) { animation-delay: .3s; }
+    .flip-cell:nth-child(4) { animation-delay: .45s; }
+    .radar-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; flex: 1;
+    }
+    .radar-cell {
+      border: 1px solid #e6e6e2; border-radius: 10px; padding: 6px;
+      position: relative; overflow: hidden;
+    }
+    .w.ink .radar-cell { border-color: #2a2a2a; }
+    .radar-cell .ping {
+      position: absolute; right: 6px; top: 6px; width: 6px; height: 6px; border-radius: 999px;
+      background: var(--red);
+      animation: nf-breathe 1.6s ease-in-out infinite;
+    }
+    .radar-cell:nth-child(2) .ping { animation-delay: .2s; }
+    .radar-cell:nth-child(3) .ping { animation-delay: .4s; }
+    .radar-cell:nth-child(4) .ping { animation-delay: .6s; }
+    .filters button[data-filter="live"].active {
+      background: #7c1d1d; border-color: #ff8a8a; color: #fff;
+    }
+
   </style>
 </head>
 <body>
   <header>
     <div>
       <h1>nf-fit widget preview</h1>
-      <p>Компактная сетка 2×2 / 3×2 · sample data · обновлено Nov 2026</p>
+      <p>2×2 / 3×2 · CSS LIVE-анимации (на телефоне статичны) · sample data</p>
     </div>
     <div class="filters" id="filters">
-      <button data-filter="all" class="active">все · 2×2/3×2</button>
+      <button data-filter="all">все · 2×2/3×2</button>
       <button data-filter="new">только NEW</button>
       <button data-filter="ink">ink / dark</button>
       <button data-filter="light">light</button>
@@ -282,6 +485,22 @@
       { id: 'new-frame-day', name: 'NEW · frame day', format: '2×2', theme: 'light', kind: 'frame-day' },
       { id: 'new-micro-kcal-ink', name: 'NEW · micro kcal ink', format: '2×2', theme: 'ink', kind: 'micro' },
       { id: 'new-quad-light', name: 'NEW · quad light', format: '3×2', theme: 'light', kind: 'quad' },
+
+      // LIVE animated batch (preview CSS only)
+      { id: 'live-pulse-kcal', name: 'LIVE · pulse kcal', format: '2×2', theme: 'light', kind: 'live-pulse', label: 'KCAL', value: 'energyValue' },
+      { id: 'live-orbit-kcal', name: 'LIVE · orbit kcal', format: '2×2', theme: 'light', kind: 'live-orbit', label: 'KCAL', value: 'energyValue' },
+      { id: 'live-orbit-kcal-ink', name: 'LIVE · orbit kcal ink', format: '2×2', theme: 'ink', kind: 'live-orbit', label: 'KCAL', value: 'energyValue' },
+      { id: 'live-water-rise', name: 'LIVE · water rise', format: '2×2', theme: 'light', kind: 'live-water', label: 'WATER', value: 'waterValue' },
+      { id: 'live-water-wave', name: 'LIVE · water wave', format: '3×2', theme: 'light', kind: 'live-water-wide' },
+      { id: 'live-sleep-moon', name: 'LIVE · sleep moon', format: '2×2', theme: 'ink', kind: 'live-moon', label: 'SLEEP', value: 'sleepValue' },
+      { id: 'live-aurora-sleep', name: 'LIVE · aurora sleep', format: '3×2', theme: 'ink', kind: 'live-aurora' },
+      { id: 'live-steps-ticker', name: 'LIVE · steps ticker', format: '2×2', theme: 'light', kind: 'live-ticker', label: 'STEPS', value: 'stepsValue' },
+      { id: 'live-neon-steps', name: 'LIVE · neon steps', format: '2×2', theme: 'ink', kind: 'live-neon', label: 'STEPS', value: 'stepsValue' },
+      { id: 'live-streak-flame', name: 'LIVE · streak flame', format: '2×2', theme: 'ink', kind: 'live-flame', label: 'STREAK', value: 'streakValue' },
+      { id: 'live-ecg-kcal', name: 'LIVE · ecg kcal', format: '3×2', theme: 'light', kind: 'live-ecg', label: 'KCAL', value: 'energyValue' },
+      { id: 'live-flip-kcal', name: 'LIVE · flip kcal', format: '2×2', theme: 'ink', kind: 'live-flip', label: 'KCAL', value: 'energyValue' },
+      { id: 'live-day-radar', name: 'LIVE · day radar', format: '3×2', theme: 'light', kind: 'live-radar' },
+      { id: 'live-day-radar-ink', name: 'LIVE · day radar ink', format: '3×2', theme: 'ink', kind: 'live-radar' },
     ];
 
     function sizeClass(format) {
@@ -473,16 +692,112 @@
           </div>
         </div>`;
       }
+
+      if (w.kind === 'live-pulse') {
+        return `<div class="${base} pulse-host">
+          <div class="breathe"></div>
+          <div class="lbl">${w.label}</div>
+          <div class="val lg" style="margin-top:10px;position:relative;z-index:1">${v(w.value)}</div>
+        </div>`;
+      }
+      if (w.kind === 'live-orbit') {
+        return `<div class="${base}" style="align-items:center;text-align:center">
+          <div class="lbl">${w.label}</div>
+          <div style="position:relative;width:78px;height:78px;margin:6px auto 0">
+            <div class="orbit" style="position:absolute;inset:0;margin:0"></div>
+            <div class="orbit-center" style="position:absolute;inset:14px;animation:none">${v(w.value)}</div>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'live-water') {
+        return `<div class="${base}">
+          <div class="row spread"><span class="lbl">${w.label}</span><span class="sq-accent"></span></div>
+          <div class="val" style="font-size:16px">${v(w.value)}<span class="unit">${S.waterUnit}</span></div>
+          <div class="water-tank"><div class="water-fill"></div><div class="water-wave"></div></div>
+        </div>`;
+      }
+      if (w.kind === 'live-water-wide') {
+        return `<div class="${base} wide">
+          <div class="row spread"><span class="lbl">HYDRATION</span><span class="pixel" style="font-size:9px">${S.dayLabel}</span></div>
+          <div class="val" style="font-size:18px">${S.waterValue}<span class="unit">${S.waterUnit}</span></div>
+          <div class="water-tank" style="min-height:42px"><div class="water-fill" style="height:55%"></div><div class="water-wave"></div></div>
+        </div>`;
+      }
+      if (w.kind === 'live-moon') {
+        return `<div class="${base} pulse-host" style="overflow:hidden">
+          <div class="stars"><span></span><span></span><span></span><span></span></div>
+          <div class="lbl">${w.label}</div>
+          <div class="moon"></div>
+          <div class="val" style="margin-top:8px;position:relative;z-index:1">${v(w.value)}<span class="unit">h</span></div>
+        </div>`;
+      }
+      if (w.kind === 'live-aurora') {
+        return `<div class="${base} wide aurora">
+          <div class="row spread"><span class="lbl" style="color:#cde">SLEEP</span><span class="sq-accent"></span></div>
+          <div class="val lg" style="color:#fff">${S.sleepValue}<span class="unit" style="color:#cde">h</span></div>
+          <div class="lbl" style="color:#9ab;margin-top:8px">RECOVERY · ${S.dayLabel}</div>
+        </div>`;
+      }
+      if (w.kind === 'live-ticker') {
+        return `<div class="${base} ticker">
+          <div class="row spread"><span class="lbl">${w.label}</span><span class="sq-accent"></span></div>
+          <div class="val lg">${v(w.value)}</div>
+          <div class="dots" style="color:var(--red)">${S.energyDots}</div>
+        </div>`;
+      }
+      if (w.kind === 'live-neon') {
+        return `<div class="${base} neon">
+          <div class="row spread"><span class="lbl">${w.label}</span><span class="sq-accent"></span></div>
+          <div class="val lg">${v(w.value)}</div>
+          <div class="led"></div>
+        </div>`;
+      }
+      if (w.kind === 'live-flame') {
+        return `<div class="${base}">
+          <div class="row spread"><span class="lbl">${w.label}</span><span class="sq-accent"></span></div>
+          <div class="val lg">${v(w.value)}</div>
+          <div class="flame"></div>
+        </div>`;
+      }
+      if (w.kind === 'live-ecg') {
+        return `<div class="${base} wide">
+          <div class="row spread"><span class="lbl">${w.label}</span><span class="pixel" style="font-size:9px">${S.dayLabel}</span></div>
+          <div class="val" style="font-size:20px">${v(w.value)}</div>
+          <svg class="ecg" viewBox="0 0 120 36" preserveAspectRatio="none">
+            <path d="M0 22 H18 L24 22 L30 8 L36 30 L42 18 L48 22 H72 L78 12 L84 28 L90 22 H120" />
+          </svg>
+        </div>`;
+      }
+      if (w.kind === 'live-flip') {
+        const digits = String(v(w.value)).padStart(4, '0').slice(-4).split('');
+        return `<div class="${base}">
+          <div class="row spread"><span class="lbl">${w.label}</span><span class="sq-accent"></span></div>
+          <div class="flip-row">${digits.map(d => `<div class="flip-cell">${d}</div>`).join('')}</div>
+        </div>`;
+      }
+      if (w.kind === 'live-radar') {
+        return `<div class="${base} wide">
+          <div class="row spread"><span class="pixel" style="font-size:9px">${S.dayLabel}</span><span class="sq-accent"></span></div>
+          <div class="radar-grid">
+            <div class="radar-cell"><span class="ping"></span><div class="lbl">KCAL</div><div class="val sm">${S.energyValue}</div></div>
+            <div class="radar-cell"><span class="ping"></span><div class="lbl">STEPS</div><div class="val sm">${S.stepsValue}</div></div>
+            <div class="radar-cell"><span class="ping"></span><div class="lbl">WATER</div><div class="val sm">${S.waterValue}<span class="unit">${S.waterUnit}</span></div></div>
+            <div class="radar-cell"><span class="ping"></span><div class="lbl">SLEEP</div><div class="val sm">${S.sleepValue}</div></div>
+          </div>
+        </div>`;
+      }
+
       return `<div class="${base}"><div class="lbl">${w.name}</div></div>`;
     }
 
-    let filter = 'all';
+    let filter = 'live';
     const grid = document.getElementById('grid');
 
     function paint() {
       grid.innerHTML = '';
       widgets.filter((w) => {
-        if (filter === 'new') return w.name.startsWith('NEW ·');
+        if (filter === 'live') return w.name.startsWith('LIVE ·');
+        if (filter === 'new') return w.name.startsWith('NEW ·') || w.name.startsWith('LIVE ·');
         if (filter === 'ink') return w.theme === 'ink' || w.theme === 'red';
         if (filter === 'light') return w.theme === 'light';
         return true;
@@ -491,7 +806,7 @@
         card.className = 'card';
         card.innerHTML = `
           <div class="meta">
-            <div class="name ${w.name.startsWith('NEW') ? 'new' : ''}">${w.name}</div>
+            <div class="name ${w.name.startsWith('NEW') || w.name.startsWith('LIVE') ? 'new' : ''}">${w.name}${w.name.startsWith('LIVE') ? '<span class="live-tag">ANIM</span>' : ''}</div>
             <div class="fmt">${w.format}</div>
           </div>
           <div class="stage">${renderWidget(w)}</div>
