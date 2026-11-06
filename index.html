@@ -626,6 +626,14 @@
       0%, 86%, 100% { opacity: 0; }
       88%, 94% { opacity: 1; }
     }
+      88%, 94% { opacity: 1; }
+    }
+
+    .cat-data {
+      display: flex; align-items: center; gap: 8px; margin-top: 4px; flex: 1;
+    }
+    .cat-metrics { flex: 1; min-width: 0; }
+    .cat-stage { margin: 0; width: 56px; height: 56px; flex-shrink: 0; }
     .cat-stage {
       position: relative; width: 72px; height: 72px; margin: 6px auto 0;
       image-rendering: pixelated;
@@ -927,13 +935,19 @@
 
 
       if (w.kind === 'pixel-cat') {
-        return `<div class="${base}" style="align-items:center;text-align:center">
-          <div class="lbl">BUDDY</div>
-          <div class="cat-stage">
-            <img src="img/pixel_buddy.png" alt="" />
-            <img class="blink" src="img/pixel_buddy_blink.png" alt="" />
+        return `<div class="${base}">
+          <div class="row spread"><span class="lbl">BUDDY</span><span class="pixel" style="font-size:9px">${S.dayLabel}</span></div>
+          <div class="cat-data">
+            <div class="cat-stage">
+              <img src="img/pixel_buddy.png" alt="" />
+              <img class="blink" src="img/pixel_buddy_blink.png" alt="" />
+            </div>
+            <div class="cat-metrics">
+              <div class="lbl">KCAL</div>
+              <div class="val" style="font-size:16px;margin:2px 0 0">${S.energyValue}</div>
+              <div class="lbl" style="margin-top:6px">STR ${S.streakValue} · TR ${S.trainValue}m</div>
+            </div>
           </div>
-          <div class="val sm" style="margin-top:6px">yum</div>
         </div>`;
       }
 
