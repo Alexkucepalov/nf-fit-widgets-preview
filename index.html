@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en" translate="no" class="notranslate">
 <head>
   <meta charset="utf-8" />
+  <meta name="google" content="notranslate" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>nf-fit · widget preview · LIVE</title>
   <style>
@@ -141,19 +142,21 @@
     .w.ink { background: var(--soft-ink); color: var(--paper); }
     .w.red { background: var(--red); color: #fff; }
     .lbl {
-      font-family: 'PressStart', monospace;
-      font-size: 8px;
-      letter-spacing: 0.14em;
-      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.2;
     }
     .w.ink .lbl, .w.red .lbl { color: var(--muted-ink); }
     .w.red .lbl { color: #ffd6d6; }
     .val {
       font-family: 'PressStart', monospace;
-      font-size: 22px;
-      margin-top: 8px;
-      line-height: 1.2;
+      font-size: 16px;
+      margin-top: 4px;
+      line-height: 1.25;
     }
     .val.lg { font-size: 18px; }
     .val.sm { font-size: 14px; }
@@ -633,6 +636,21 @@
       display: flex; align-items: center; gap: 8px; margin-top: 4px; flex: 1;
     }
     .cat-metrics { flex: 1; min-width: 0; }
+
+    /* Android-faithful: labels sans, values pixel; day/meta match RemoteViews */
+    .pixel.day {
+      font-size: 9px; color: var(--ink); letter-spacing: 0;
+      text-transform: none; font-weight: 400;
+    }
+    .lbl.meta { margin-top: 4px; font-size: 8px; }
+    .cat-data { display: flex; align-items: center; gap: 6px; margin-top: 2px; flex: 1; min-height: 0; }
+    .cat-metrics { flex: 1; min-width: 0; }
+    .cat-metrics .val { margin-top: 2px; font-size: 16px; }
+    .cat-stage { margin: 0; width: 56px; height: 56px; flex-shrink: 0; }
+    .train-track.android-bar { height: 8px; border-radius: 2px; }
+    .train-track.android-bar .train-car { width: 62%; border-radius: 2px; animation: nf-train 2.2s linear infinite; }
+    .w.notranslate, .notranslate { translate: no; }
+
     .cat-stage { margin: 0; width: 56px; height: 56px; flex-shrink: 0; }
     .cat-stage {
       position: relative; width: 72px; height: 72px; margin: 6px auto 0;
@@ -648,11 +666,11 @@
     }
   </style>
 </head>
-<body>
+<body class="notranslate" translate="no">
   <header>
     <div>
       <h1>nf-fit widget preview</h1>
-      <p>2×2 / 3×2 · buddy + typewriter + progress train · sample data</p>
+      <p>2×2 / 3×2 · mirrors Android layouts (labels sans · values pixel) · sample data</p>
     </div>
     <div class="filters" id="filters">
       <button data-filter="all">все · 2×2/3×2</button>
@@ -935,8 +953,8 @@
 
 
       if (w.kind === 'pixel-cat') {
-        return `<div class="${base}">
-          <div class="row spread"><span class="lbl">BUDDY</span><span class="pixel" style="font-size:9px">${S.dayLabel}</span></div>
+        return `<div class="${base} notranslate">
+          <div class="row spread"><span class="lbl">BUDDY</span><span class="pixel day">${S.dayLabel}</span></div>
           <div class="cat-data">
             <div class="cat-stage">
               <img src="img/pixel_buddy.png" alt="" />
@@ -944,8 +962,8 @@
             </div>
             <div class="cat-metrics">
               <div class="lbl">KCAL</div>
-              <div class="val" style="font-size:16px;margin:2px 0 0">${S.energyValue}</div>
-              <div class="lbl" style="margin-top:6px">STR ${S.streakValue} · TR ${S.trainValue}m</div>
+              <div class="val">${S.energyValue}</div>
+              <div class="lbl meta">STR ${S.streakValue} · TR ${S.trainValue}M</div>
             </div>
           </div>
         </div>`;
@@ -1161,10 +1179,10 @@
         </div>`;
       }
       if (w.kind === 'live-train') {
-        return `<div class="${base} wide">
-          <div class="row spread"><span class="lbl">GOAL TRAIN</span><span class="pixel" style="font-size:9px">${S.dayLabel}</span></div>
-          <div class="val" style="font-size:18px">${S.energyValue}<span class="unit">/ 2400</span></div>
-          <div class="train-track"><div class="train-car"></div></div>
+        return `<div class="${base} wide notranslate">
+          <div class="row spread"><span class="lbl">GOAL TRAIN</span><span class="pixel day">${S.dayLabel}</span></div>
+          <div class="val" style="margin-top:6px">${S.energyValue}<span class="unit">/ 2400</span></div>
+          <div class="train-track android-bar"><div class="train-car"></div></div>
           <div class="row spread" style="margin-top:8px">
             <span class="lbl">STEPS ${S.stepsValue}</span>
             <span class="lbl">H2O ${S.waterValue}${S.waterUnit}</span>
@@ -1186,10 +1204,10 @@
         </div>`;
       }
       if (w.kind === 'live-type') {
-        return `<div class="${base}">
-          <div class="row spread"><span class="lbl">${w.label}</span><span class="sq-accent"></span></div>
-          <div class="val lg cursor-blink">${v(w.value)}</div>
-          <div class="dots">${S.energyDots}</div>
+        return `<div class="${base} notranslate">
+          <div class="row" style="align-items:center;gap:4px"><span class="lbl">KCAL</span><span class="sq-accent"></span></div>
+          <div class="val cursor-blink" style="margin-top:6px">${v(w.value)}</div>
+          <div class="dots" style="margin-top:4px;letter-spacing:0.1em;color:var(--ink);font-size:8px">${S.energyDots}</div>
         </div>`;
       }
 
