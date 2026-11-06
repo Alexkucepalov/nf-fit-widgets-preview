@@ -674,7 +674,8 @@
     </div>
     <div class="filters" id="filters">
       <button data-filter="all">все · 2×2/3×2</button>
-      <button data-filter="live" class="active">LIVE / buddy</button>
+      <button data-filter="new" class="active">NEW · cats</button>
+      <button data-filter="live">LIVE / buddy</button>
       <button data-filter="ink">ink / dark</button>
       <button data-filter="light">light</button>
     </div>
@@ -754,6 +755,16 @@
 
       // Animated keepers (web LIVE; Android: buddy blink / typewriter / progress train)
       { id: 'pixel-cat', name: 'nf-fit · buddy', format: '2×2', theme: 'light', kind: 'pixel-cat' },
+{ id: 'cat_hero_kcal', name: 'NEW · cat hero kcal', format: '2×2', theme: 'light', kind: 'cat-hero' },
+      { id: 'cat_ink_sleep', name: 'NEW · cat sleep ink', format: '2×2', theme: 'ink', kind: 'cat-ink-sleep' },
+      { id: 'cat_streak', name: 'NEW · cat streak', format: '2×2', theme: 'light', kind: 'cat-streak' },
+      { id: 'cat_steps', name: 'NEW · cat steps', format: '2×2', theme: 'light', kind: 'cat-steps' },
+      { id: 'cat_water', name: 'NEW · cat water', format: '2×2', theme: 'light', kind: 'cat-water' },
+      { id: 'cat_wide_day', name: 'NEW · cat day', format: '3×2', theme: 'light', kind: 'cat-wide-day' },
+      { id: 'cat_progress', name: 'NEW · cat progress', format: '3×2', theme: 'light', kind: 'cat-progress' },
+      { id: 'split_duo', name: 'NEW · split duo', format: '2×2', theme: 'light', kind: 'split-duo' },
+      { id: 'ink_big_kcal', name: 'NEW · ink big kcal', format: '2×2', theme: 'ink', kind: 'ink-big-kcal' },
+      { id: 'train_badge', name: 'NEW · train badge', format: '2×2', theme: 'light', kind: 'train-badge' },
       { id: 'live-typewriter-kcal', name: 'LIVE · typewriter kcal', format: '2×2', theme: 'light', kind: 'live-type', label: 'KCAL', value: 'energyValue' },
       { id: 'live-progress-train', name: 'LIVE · progress train', format: '3×2', theme: 'light', kind: 'live-train' },
 
@@ -951,6 +962,109 @@
         </div>`;
       }
 
+
+
+      if (w.kind === 'cat-hero') {
+        return `<div class="${base} notranslate">
+          <div class="row spread"><span class="lbl">Cat kcal</span><span class="pixel day">${S.dayLabel}</span></div>
+          <div class="cat-stage" style="width:64px;height:64px;margin:4px auto 0">
+            <img src="img/pixel_buddy.png" alt="" /><img class="blink" src="img/pixel_buddy_blink.png" alt="" />
+          </div>
+          <div class="val" style="text-align:center;margin-top:2px">${S.energyValue}</div>
+        </div>`;
+      }
+      if (w.kind === 'cat-ink-sleep') {
+        return `<div class="${base} notranslate" style="align-items:center;text-align:center">
+          <div class="lbl">Sleep</div>
+          <div class="cat-stage" style="width:56px;height:56px;margin:6px auto 0">
+            <img src="img/pixel_buddy.png" alt="" /><img class="blink" src="img/pixel_buddy_blink.png" alt="" />
+          </div>
+          <div class="val" style="margin-top:4px;color:#f7f7f5">${S.sleepValue}</div>
+          <div class="lbl" style="margin-top:2px">Hours</div>
+        </div>`;
+      }
+      if (w.kind === 'cat-streak') {
+        return `<div class="${base} notranslate">
+          <div class="cat-data">
+            <div class="cat-stage">
+              <img src="img/pixel_buddy_flip.png" alt="" /><img class="blink" src="img/pixel_buddy_flip_blink.png" alt="" />
+            </div>
+            <div class="cat-metrics">
+              <div class="lbl">Streak</div>
+              <div class="val" style="font-size:20px">${S.streakValue}</div>
+              <div class="pixel" style="margin-top:4px;color:var(--red);font-size:9px">${S.streakLeds}</div>
+            </div>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'cat-steps') {
+        return `<div class="${base} notranslate">
+          <div class="lbl">Steps</div>
+          <div class="cat-data" style="margin-top:8px">
+            <div class="val" style="flex:1;font-size:18px;margin:0">${S.stepsValue}</div>
+            <div class="cat-stage"><img src="img/pixel_buddy.png" alt="" /><img class="blink" src="img/pixel_buddy_blink.png" alt="" /></div>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'cat-water') {
+        return `<div class="${base} notranslate" style="align-items:center;text-align:center">
+          <div class="cat-stage" style="margin:0 auto"><img src="img/pixel_buddy_flip.png" alt="" /><img class="blink" src="img/pixel_buddy_flip_blink.png" alt="" /></div>
+          <div class="lbl" style="margin-top:4px">Water</div>
+          <div class="val">${S.waterValue}<span class="unit">${S.waterUnit}</span></div>
+        </div>`;
+      }
+      if (w.kind === 'cat-wide-day') {
+        return `<div class="${base} wide notranslate">
+          <div class="cat-data">
+            <div style="text-align:center">
+              <div class="cat-stage" style="margin:0 auto"><img src="img/pixel_buddy.png" alt="" /><img class="blink" src="img/pixel_buddy_blink.png" alt="" /></div>
+              <div class="pixel day" style="margin-top:4px">${S.dayLabel}</div>
+            </div>
+            <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:6px 8px">
+              <div><div class="lbl">Kcal</div><div class="val sm">${S.energyValue}</div></div>
+              <div><div class="lbl">Steps</div><div class="val sm">${S.stepsValue}</div></div>
+              <div><div class="lbl">Water</div><div class="val sm">${S.waterValue}</div></div>
+              <div><div class="lbl">Sleep</div><div class="val sm">${S.sleepValue}</div></div>
+            </div>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'cat-progress') {
+        return `<div class="${base} wide notranslate">
+          <div class="row spread"><span class="lbl">Cat goal</span><span class="pixel day">${S.dayLabel}</span></div>
+          <div class="cat-data" style="margin-top:6px">
+            <div class="cat-stage"><img src="img/pixel_buddy.png" alt="" /><img class="blink" src="img/pixel_buddy_blink.png" alt="" /></div>
+            <div class="cat-metrics">
+              <div class="val">${S.energyValue}<span class="unit">/ 2400</span></div>
+              <div class="train-track android-bar" style="margin-top:8px"><div class="train-car"></div></div>
+            </div>
+          </div>
+        </div>`;
+      }
+      if (w.kind === 'split-duo') {
+        return `<div class="${base} notranslate">
+          <div class="lbl">Kcal</div>
+          <div class="val" style="margin-top:2px">${S.energyValue}</div>
+          <hr style="border:none;border-top:1px solid #e6e6e2;margin:10px 0;width:100%" />
+          <div class="lbl">Steps</div>
+          <div class="val" style="margin-top:2px">${S.stepsValue}</div>
+        </div>`;
+      }
+      if (w.kind === 'ink-big-kcal') {
+        return `<div class="${base} notranslate">
+          <div class="row spread"><span class="lbl">Kcal</span><span class="sq-accent"></span></div>
+          <div class="val" style="flex:1;display:flex;align-items:center;font-size:22px;color:#f7f7f5">${S.energyValue}</div>
+          <div class="pixel day" style="color:#8b929e">${S.dayLabel}</div>
+        </div>`;
+      }
+      if (w.kind === 'train-badge') {
+        return `<div class="${base} notranslate" style="align-items:center;text-align:center">
+          <div class="lbl">Train</div>
+          <div class="val" style="margin-top:6px;font-size:28px;color:var(--red)">${S.trainValue}</div>
+          <div class="lbl">Min</div>
+          <div class="lbl meta">Str ${S.streakValue}</div>
+        </div>`;
+      }
 
       if (w.kind === 'pixel-cat') {
         return `<div class="${base} notranslate">
@@ -1280,13 +1394,13 @@
       return `<div class="${base}"><div class="lbl">${w.name}</div></div>`;
     }
 
-    let filter = 'live';
+    let filter = 'new';
     const grid = document.getElementById('grid');
 
     function paint() {
       grid.innerHTML = '';
       widgets.filter((w) => {
-        if (filter === 'live') return w.name.startsWith('LIVE ·') || w.id === 'pixel-cat';
+        if (filter === 'live') return w.name.startsWith('LIVE ·') || w.id === 'pixel-cat' || w.id.startsWith('cat_');
         if (filter === 'new') return w.name.startsWith('NEW ·') || w.name.startsWith('LIVE ·') || w.id === 'pixel-cat';
         if (filter === 'ink') return w.theme === 'ink' || w.theme === 'red';
         if (filter === 'light') return w.theme === 'light';
